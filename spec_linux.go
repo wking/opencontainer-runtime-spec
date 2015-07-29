@@ -4,6 +4,9 @@ package specs
 
 import "os"
 
+// LinuxStateDirectory holds the container's state information
+const LinuxStateDirectory = "/run/oci"
+
 // LinuxSpec is the full specification for Linux containers
 type LinuxSpec struct {
 	Spec
@@ -177,4 +180,18 @@ type Device struct {
 	UID uint32 `json:"uid"`
 	// Gid of the device.
 	GID uint32 `json:"gid"`
+}
+
+type LinuxState struct {
+	State
+
+	// Linux holds platform specific state information for linux
+	Linux struct {
+		// Namespaces holds paths to the container's namespaces on disk
+		Namespaces map[string]string `json:"namespaces"`
+		// Cgroups holds paths to the container's cgroup paths
+		Cgroups map[string]string `json:"cgroups"`
+		// ExternalFds holds paths to the container's open file descriptors
+		ExternalFds []string `json:"externalFds,omitempty"`
+	} `json:"linux"`
 }

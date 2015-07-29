@@ -78,3 +78,13 @@ type Hook struct {
 	Args []string `json:"args"`
 	Env  []string `json:"env"`
 }
+
+// State holds information about the runtime state of the container
+type State struct {
+	// ID is the container ID
+	ID string `json:"id"`
+	// Pid is the process id for the container's main process
+	Pid int `json:"pid"`
+	// Root path to the container's root filesystem
+	Root string `json:"root"`
+}

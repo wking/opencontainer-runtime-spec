@@ -1,5 +1,51 @@
 # Runtime and Lifecycle
 
+## State
+
+The runtime state for a container is persisted on disk so that external tools can consume and act on this information.
+The runtime state is stored in a JSON encoded file.
+It is recommended that this file is stored in a temporary filesystem so that it can be removed on a system reboot.
+On Linux based systems the state information is stored in `/run/oci`.
+The directory structure for a container is `<root>/<containerID>/state.json`.
+
+* **id** (string) ID is the container's ID.
+* **pid** (int) Pid is the ID of the main process within the container.
+* **root** (string) Root is the path to the container's root filesystem specified in the configuration.
+
+*Example*
+
+```json
+{
+    "id": "oci-container",
+    "pid": 4422,
+    "root": "/containers/redis"
+}
+```
+
+Linux systems add some platform specific information to the state.
+
+* **namespaces** Paths to the Linux namespaces setup for the container.
+* **cgroups** Paths to the container's cgroups.
+* **externalFds** Paths to the container's open file descriptors.
+
+*Example Linux*
+
+```json
+{
+    "namespaces": {
+        "process": "/proc/33/ns/pid",
+        "net": "/proc/33/ns/net"
+    },
+    "cgroups": {
+        "device": "/sys/fs/cgroup/devices/oci-container",
+        "cpu": "/sys/fs/cgroup/cpu/oci-container"
+    },
+    "externalFds": [
+        "/proc/33/fd/1"
+    ]
+}
+```
+
 ## Lifecycle
 
 ### Create
