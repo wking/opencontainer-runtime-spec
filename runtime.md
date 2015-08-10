@@ -9,6 +9,9 @@ On Linux based systems the state information is stored in `/run/oci`.
 The directory structure for a container is `<root>/<containerID>/state.json`.
 
 * **id** (string) The container's ID.
+  Only ASCII letters, numbers, and hyphens are valid.
+  This value must be unique for a given host, but need not be universally unique.
+  Runtimes must allow the caller to set this ID, so that callers may choose, for example, to use [UUIDs][uuid] for universal uniqueness.
 * **pid** (int) The ID of the main process within the container.
 * **root** (string) The path to the container's root filesystem specified in the configuration.
 
@@ -103,3 +106,5 @@ If a hook returns a non-zero exit code, then an error is logged and the remainin
 ```
 
 `path` is required for a hook. `args` and `env` are optional.
+
+[uuid]: https://tools.ietf.org/html/rfc4122
