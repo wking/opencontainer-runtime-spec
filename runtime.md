@@ -2,11 +2,7 @@
 
 ## State
 
-The runtime state for a container is persisted on disk so that external tools can consume and act on this information.
-The runtime state is stored in a JSON encoded file.
-It is recommended that this file is stored in a temporary filesystem so that it can be removed on a system reboot.
-On Linux based systems the state information is stored in `/run/oci`.
-The directory structure for a container is `<root>/<containerID>/state.json`.
+The JSON-encoded runtime state must include the following properties:
 
 * **id** (string) The container's ID.
   Only ASCII letters, numbers, and hyphens are valid.

@@ -4,9 +4,6 @@ package specs
 
 import "os"
 
-// LinuxStateDirectory holds the container's state information
-const LinuxStateDirectory = "/run/oci"
-
 // LinuxSpec is the full specification for Linux containers
 type LinuxSpec struct {
 	Spec
