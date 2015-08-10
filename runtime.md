@@ -8,9 +8,9 @@ It is recommended that this file is stored in a temporary filesystem so that it 
 On Linux based systems the state information is stored in `/run/oci`.
 The directory structure for a container is `<root>/<containerID>/state.json`.
 
-* **id** (string) ID is the container's ID.
-* **pid** (int) Pid is the ID of the main process within the container.
-* **root** (string) Root is the path to the container's root filesystem specified in the configuration.
+* **id** (string) The container's ID.
+* **pid** (int) The ID of the main process within the container.
+* **root** (string) The path to the container's root filesystem specified in the configuration.
 
 *Example*
 
