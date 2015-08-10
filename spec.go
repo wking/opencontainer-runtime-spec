@@ -79,7 +79,8 @@ type Hook struct {
 	Env  []string `json:"env"`
 }
 
-// State holds information about the runtime state of the container
+// State is the base type for the container's runtime state. It
+// specifies platform independent state.
 type State struct {
 	// ID is the container ID
 	ID string `json:"id"`
