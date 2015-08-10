@@ -11,6 +11,9 @@ By providing a default location that container state is stored external applicat
 
 * **version** (string) Version of the OCI specification used when creating the container.
 * **id** (string) ID is the container's ID.
+  Only ASCII letters, numbers, and hyphens are valid (a–z, A–Z, 0–9, and ‘-’).
+  This value must be unique for a given host, but need not be universally unique.
+  Runtimes must allow the caller to set this ID, so that callers may choose, for example, to use [UUIDs][uuid] for universal uniqueness.
 * **pid** (int) Pid is the ID of the main process within the container.
 * **root** (string) Root is the path to the container's bundle directory.
 
@@ -94,3 +97,5 @@ If a hook returns a non-zero exit code, then an error is logged and the remainin
 
 `path` is required for a hook.
 `args` and `env` are optional.
+
+[uuid]: https://tools.ietf.org/html/rfc4122
