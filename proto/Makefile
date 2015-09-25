@@ -14,6 +14,9 @@ CPP_SOURCE  := $(patsubst %.proto,$(CPP_DIR)/%.pb.cc,$(PROTO_FILES))
 CPP_HDR     := $(patsubst %.proto,$(CPP_DIR)/%.pb.h,$(PROTO_FILES))
 CPP_FILES   := $(CPP_SOURCE) $(CPP_HDR)
 
+DOCKER      ?= docker
+CWD         := $(shell pwd)
+
 default: example
 
 all: go py c cpp
@@ -45,6 +48,9 @@ $(PY_DIR)/%_pb2.py: %.proto
 	@mkdir -p $(PY_DIR)
 	protoc --python_out=$(PY_DIR) $^
 
+proto3: Dockerfile run.sh
+	$(DOCKER) build -t $@ . && $(DOCKER) run -it -v $(CWD):/proto:ro -v $(CWD)/output:/output:rw $@
+
 clean:
-	rm -rf *~ $(GO_FILES) $(C_FILES) $(PY_FILES) $(CPP_FILES)
+	rm -rf *~ $(GO_FILES) $(C_FILES) $(PY_FILES) $(CPP_FILES) $(CWD)/output
 
