@@ -3,27 +3,31 @@
 package main
 
 import (
-	"encoding/json"
 	"log"
+	"os"
 
 	oci "./go/"
-	"github.com/golang/protobuf/proto"
+	"github.com/golang/protobuf/jsonpb"
 )
 
 func main() {
-	s := oci.LinuxSpec{
+	s := &oci.LinuxSpec{
 		Spec: &oci.Spec{
-			Platform: &oci.Platform{Os: proto.String("linux"), Arch: proto.String("x86_64")},
+			Platform: &oci.Platform{Os: "linux", Arch: "x86_64"},
 			Process: &oci.Process{
-				Cwd: proto.String("/"),
+				Cwd: "/",
 				Env: []string{"TERM=linux"},
 			},
 		},
 	}
 
-	buf, err := json.MarshalIndent(s, "", "  ")
+	marshaler := jsonpb.Marshaler{
+		EnumsAsString: true,
+		Indent:        "  ",
+	}
+
+	err := marshaler.Marshal(os.Stdout, s)
 	if err != nil {
 		log.Fatal(err)
 	}
-	println(string(buf))
 }
