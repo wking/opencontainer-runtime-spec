@@ -13,6 +13,7 @@ import (
 func main() {
 	s := oci.LinuxSpec{
 		Spec: &oci.Spec{
+			Version: proto.String("0.1.0"),
 			Platform: &oci.Platform{Os: proto.String("linux"), Arch: proto.String("x86_64")},
 			Process: &oci.Process{
 				Terminal: proto.Bool(true),
