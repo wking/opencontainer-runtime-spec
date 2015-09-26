@@ -15,10 +15,28 @@ func main() {
 		Spec: &oci.Spec{
 			Platform: &oci.Platform{Os: proto.String("linux"), Arch: proto.String("x86_64")},
 			Process: &oci.Process{
-				Cwd: proto.String("/"),
+				Terminal: proto.Bool(true),
+				User: &oci.User{Type: oci.PlatformType_LINUX.Enum()},
+				Args: []string{"sh"},
+				Cwd: proto.String("/root"),
 				Env: []string{"TERM=linux"},
 			},
 		},
+	}
+
+	err := proto.SetExtension(s.Spec.Process.User, oci.E_Uid, proto.Int32(1))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = proto.SetExtension(s.Spec.Process.User, oci.E_Gid, proto.Int32(1))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	err = proto.SetExtension(s.Spec.Process.User, oci.E_AdditionalGids, []int32{5, 6})
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	buf, err := json.MarshalIndent(s, "", "  ")
