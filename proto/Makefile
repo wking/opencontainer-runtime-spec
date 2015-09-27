@@ -17,7 +17,8 @@ CPP_FILES   := $(CPP_SOURCE) $(CPP_HDR)
 DOCKER      ?= docker
 CWD         := $(shell pwd)
 
-default: example
+default: example_cpp
+	./example_cpp
 
 all: go py c cpp
 
