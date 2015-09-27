@@ -10,6 +10,8 @@ message RuntimeSpec {
 	repeated MountFieldEntry mounts = 1;
 	// Hooks are the commands run at various lifecycle events of the container.
 	Hooks hooks = 2;
+	// LinuxRuntime is the Linux-specific, host-specific configuration.
+	LinuxRuntime linuxx = 3;
 }
 
 // MountFieldEntry is more backwards compatible protobuf associative map (than map<string, Mount>)
@@ -48,13 +50,6 @@ message Hooks {
 /*
 BEGIN Linux specific runtime
 */
-
-// LinuxRuntimeSpec is the full specification for linux containers.
-message LinuxRuntimeSpec {
-	RuntimeSpec runtime_spec = 1;
-	// LinuxRuntime is platform specific configuration for linux based containers.
-	LinuxRuntime linux = 2;
-}
 
 // LinuxRuntime hosts the Linux-only runtime information
 message LinuxRuntime {

@@ -45,7 +45,7 @@ $(CPP_DIR)/%.pb.cc: %.proto
 
 %_cpp: %.cc $(CPP_FILES)
 	pkg-config --cflags protobuf  # fails if protobuf is not installed
-	c++ $< $(filter $(CPP_DIR)/config%.cc, $(CPP_FILES)) -o $@ $$(pkg-config --cflags --libs protobuf) -I $(CPP_DIR)
+	c++ $< $(filter %.cc, $(CPP_FILES)) -o $@ $$(pkg-config --cflags --libs protobuf) -I $(CPP_DIR)
 
 py: $(PY_FILES)
 
