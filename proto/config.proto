@@ -20,15 +20,8 @@ message Spec {
 	// Mounts profile configuration for adding mounts to the container's
 	// filesystem.
 	repeated MountPoint mounts = 6;
-}
-
-
-// LinuxSpec is the full specification for linux containers.
-message LinuxSpec {
-	Spec spec = 1;
-	// LinuxConfig is platform specific configuration for linux based
-	// containers.
-	LinuxConfig linux_config = 2;
+	// LinuxConfig is the Linux-specific, host-independent configuration.
+	LinuxConfig linuxx = 7;
 }
 
 // LinuxConfig contains platform specific configuration for linux based

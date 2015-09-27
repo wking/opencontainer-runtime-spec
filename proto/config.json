@@ -20,5 +20,12 @@
     ],
     "cwd": "/"
   },
-  "hostname": ""
+  "hostname": "",
+  "linuxx": {
+    "capabilities": [
+      "CAP_AUDIT_WRITE",
+      "CAP_KILL",
+      "CAP_NET_BIND_SERVICE"
+    ]
+  }
 }
