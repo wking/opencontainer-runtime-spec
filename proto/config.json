@@ -1,0 +1,24 @@
+{
+  "version": "",
+  "platform": {
+    "os": "linux",
+    "arch": "x86_64"
+  },
+  "process": {
+    "terminal": false,
+    "user": {
+      "@type": "type.googleapis.com/oci.LinuxUser",
+      "uid": 1,
+      "gid": 1,
+      "additionalGids": [
+        5,
+        6
+      ]
+    },
+    "env": [
+      "TERM=linux"
+    ],
+    "cwd": "/"
+  },
+  "hostname": ""
+}

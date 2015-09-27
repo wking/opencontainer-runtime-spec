@@ -42,6 +42,10 @@ $(CPP_DIR)/%.pb.cc: %.proto
 	@mkdir -p $(CPP_DIR)
 	protoc --cpp_out=$(CPP_DIR)/ $^
 
+%_cpp: %.cc $(CPP_FILES)
+	pkg-config --cflags protobuf  # fails if protobuf is not installed
+	c++ $< $(filter $(CPP_DIR)/config%.cc, $(CPP_FILES)) -o $@ $$(pkg-config --cflags --libs protobuf) -I $(CPP_DIR)
+
 py: $(PY_FILES)
 
 $(PY_DIR)/%_pb2.py: %.proto
@@ -52,5 +56,4 @@ proto3: Dockerfile run.sh
 	$(DOCKER) build -t $@ . && $(DOCKER) run -it -v $(CWD):/proto:ro -v $(CWD)/output:/output:rw $@
 
 clean:
-	rm -rf *~ $(GO_FILES) $(C_FILES) $(PY_FILES) $(CPP_FILES) $(CWD)/output
-
+	rm -rf *~ *_cpp $(GO_FILES) $(C_FILES) $(PY_FILES) $(CPP_FILES) $(CWD)/output
