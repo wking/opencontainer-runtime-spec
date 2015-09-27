@@ -10,6 +10,7 @@
 #include <google/protobuf/util/type_resolver_util.h>
 
 #include "config.pb.h"
+#include "runtime_config.pb.h"
 
 using namespace std;
 
@@ -65,6 +66,7 @@ int main(int argc, char* argv[]) {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   oci::Spec config;
+  oci::RuntimeSpec runtime;
 
   if (!ReadMessage("config.json", &config)) {
     cerr << "config.json: Failed to load." << endl;
@@ -82,6 +84,16 @@ int main(int argc, char* argv[]) {
 
   if (!WriteMessage(config)) {
     cerr << "config.json: Failed to write to stdout." << endl;
+    return -1;
+  }
+
+  if (!ReadMessage("runtime.json", &runtime)) {
+    cerr << "runtime.json: Failed to load." << endl;
+    return -1;
+  }
+
+  if (!WriteMessage(runtime)) {
+    cerr << "runtime.json: Failed to write to stdout." << endl;
     return -1;
   }
 
