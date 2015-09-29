@@ -7,7 +7,7 @@ message RuntimeSpec {
 	// Mounts is a mapping of names to mount configurations.
 	// Which mounts will be mounted and where should be chosen with MountPoints
 	// in Spec.
-	repeated MountFieldEntry mounts = 1;
+	map<string, Mount> mounts = 1;
 	// Hooks are the commands run at various lifecycle events of the container.
 	Hooks hooks = 2;
 	// LinuxRuntime is the Linux-specific, host-specific configuration.
@@ -60,7 +60,7 @@ message LinuxRuntime {
 	// Rlimits specifies rlimit options to apply to the container's process.
 	repeated Rlimit rlimits = 3;
 	// Sysctl are a set of key value pairs that are set for the container on start
-	repeated StringStringEntry sysctl = 4;
+	map<string, string> sysctl = 4;
 	// Resources contain cgroup information for handling resource constraints
 	// for the container
 	Resources resources = 5;
@@ -100,12 +100,6 @@ message Rlimit {
 	uint64 hard = 2;
 	// Soft is the soft limit for the specified type
 	uint64 soft = 3;
-}
-
-// StringStringEntry is more backwards compatible protobuf associative map (than map<string, Mount>)
-message StringStringEntry {
-	string key = 1;
-	string value = 2;
 }
 
 // Resources has container runtime resource constraints
