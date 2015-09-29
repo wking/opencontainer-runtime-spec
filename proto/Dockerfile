@@ -13,5 +13,8 @@ RUN dnf install -y golang git hg bzr
 ENV GOPATH /gopath
 ENV GOBIN /usr/bin
 RUN go get -u github.com/golang/protobuf/{proto,protoc-gen-go}
+WORKDIR protobuf-${PROTO_VERSION}
+RUN protoc --go_out=${GOPATH} src/google/protobuf/any.proto
+WORKDIR /
 VOLUME /proto /output
 CMD bash /proto/run.sh

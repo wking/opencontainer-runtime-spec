@@ -8,6 +8,8 @@ import (
 
 	oci "./go/"
 	"github.com/golang/protobuf/jsonpb"
+	"github.com/golang/protobuf/proto"
+	google_protobuf "google/protobuf"
 )
 
 func main() {
@@ -21,12 +23,22 @@ func main() {
 		},
 	}
 
+	user := &oci.LinuxUser{Uid: 1, Gid: 1, AdditionalGids: []int32{5, 6}}
+	userBytes, err := proto.Marshal(user)
+	if err != nil {
+		log.Fatal(err)
+	}
+	s.Spec.Process.User = &google_protobuf.Any{
+		TypeUrl: "oci.LinuxUser",
+		Value:   userBytes,
+	}
+
 	marshaler := jsonpb.Marshaler{
 		EnumsAsString: true,
 		Indent:        "  ",
 	}
 
-	err := marshaler.Marshal(os.Stdout, s)
+	err = marshaler.Marshal(os.Stdout, s)
 	if err != nil {
 		log.Fatal(err)
 	}
