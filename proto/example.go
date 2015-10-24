@@ -34,7 +34,6 @@ func main() {
 	}
 
 	marshaler := jsonpb.Marshaler{
-		EnumsAsString: true,
 		Indent:        "  ",
 	}
 
