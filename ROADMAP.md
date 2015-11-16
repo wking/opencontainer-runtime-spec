@@ -43,6 +43,10 @@ Define what type of actions a runtime can perform on a container without imposin
 
 Is the rootfs needed or should it just be expected in the bundle without having a field in the spec?
 
+Proposals:
+
+* [Make rootfs optional](https://groups.google.com/a/opencontainers.org/forum/#!topic/dev/6ZKMNWujDhU)
+
 *Owner:*  
 
 ### Container Definition
