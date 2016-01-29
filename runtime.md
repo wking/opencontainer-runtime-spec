@@ -1,10 +1,5 @@
 # Runtime and Lifecycle
 
-## Scope of a Container
-
-Barring access control concerns, the entity using a runtime to create a container MUST be able to use the operations defined in this specification against that same container.
-Whether other entities using the same, or other, instance of the runtime can see that container is out of scope of this specification.
-
 ## State
 
 The state of a container MUST include, at least, the following propeties:
@@ -54,6 +49,10 @@ Note: The lifecycle is a WIP and it will evolve as we have more use cases and mo
 
 OCI compliant runtimes MUST support the following operations, unless the operation is not supported by the base operating system.
 
+All operations take a `<container-id>` as an argument, and all but [start](#start) use that container ID to [retrieve the container state](#query-state) needed to interact with the container.
+Those operations MUST successfully retrieve their required state when called under [conditions in which a state query MUST succeed](#query-state).
+Those operations MAY fail when called under conditions in which a state query MAY fail.
+
 ### Errors
 In cases where the specified operation generates an error, this specification does not mandate how, or even if, that error is returned or exposed to the user of an implementation.
 Unless otherwise stated, generating an error MUST leave the state of the environment as if the operation were never attempted - modulo any possible trivial ancillary changes such as logging.
@@ -66,13 +65,15 @@ This operation MUST generate an error if it is not provided the ID of a containe
 This operation MUST return the state of a container as specified in the [State](#state) section.
 In particular, the state MUST be serialized as JSON.
 
+After a user launches a container using the [start](#start) operation, state requests by the same user in the same namespaces with the same runtime installation MUST successfully return that container's state by the time the [pre-start hooks](config.md#prestart) are called (step (3) in the [lifecycle](#lifecycle)) through the final [post-stop hooks](#config#poststop) (step (8) in the [lifecycle](#lifecycle)).
+Runtimes MAY return state under other conditions, for example to a different user or when asked from a different namespace.
 
 ### Start
 
 `start <container-id> <path-to-bundle>`
 
 This operation MUST generate an error if it is not provided a path to the bundle and the container ID to associate with the container.
-If the ID provided is not unique across all containers running on this host, or is not valid in any other way, the implementation MUST generate an error.
+If the ID provided is not unique to the [state registry](#query-state), or is not valid in any other way, the implementation MUST generate an error.
 Using the data in `config.json`, that are in the bundle's directory, this operation MUST create a new container.
 This includes creating the relevant namespaces, resource limits, etc and configuring the appropriate capabilities for the container.
 A new process within the scope of the container MUST be created as specified by the `config.json` file otherwise an error MUST be generated.
