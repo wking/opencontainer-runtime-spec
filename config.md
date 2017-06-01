@@ -325,11 +325,11 @@ For Windows based systems the user structure has the following fields:
 
 **`platform`** (object, REQUIRED) specifies the configuration's target platform.
 
-* **`os`** (string, REQUIRED) specifies the operating system family of the container configuration's specified [`root`](#root) filesystem bundle.
+* **`os`** (string, REQUIRED) specifies the operating system family of the container configuration's specified [`root.path`](#root) filesystem.
     The runtime MUST generate an error if it does not support the specified **`os`**.
     Values SHOULD be, and runtimes SHOULD understand, **`os`** entries listed in the Go Language document for [`GOOS`][go-environment].
     If an operating system is not included in the `GOOS` documentation, it SHOULD be submitted to this specification for standardization.
-* **`arch`** (string, REQUIRED) specifies the instruction set for which the binaries in the specified [`root`](#root) filesystem bundle have been compiled.
+* **`arch`** (string, REQUIRED) specifies the instruction set for which the binaries in the specified [`root.path`](#root) filesystem have been compiled.
     The runtime MUST generate an error if it does not support the specified **`arch`**.
     Values SHOULD be, and runtimes SHOULD understand, **`arch`** entries listed in the Go Language document for [`GOARCH`][go-environment].
     If an architecture is not included in the `GOARCH` documentation, it SHOULD be submitted to this specification for standardization.
