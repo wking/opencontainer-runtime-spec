@@ -320,6 +320,16 @@ type LinuxNetwork struct {
 	Priorities []LinuxInterfacePriority `json:"priorities,omitempty"`
 }
 
+// LinuxRdma for Linux cgroup 'rdma' resource management (Linux 4.11)
+type LinuxRdma struct {
+	// Hca device name whose resources to be restricted
+	HcaDevice string `json:"hca_device"`
+	// Maximum number of HCA handles that can be opened. Default is "no limit".
+	HcaHandles uint32 `json:"hca_handles"`
+	// Maximum number of HCA objects that can be created. Default is "no limit".
+	HcaObjects uint32 `json:"hca_objects"`
+}
+
 // LinuxResources has container runtime resource constraints
 type LinuxResources struct {
 	// Devices configures the device whitelist.
@@ -336,6 +346,8 @@ type LinuxResources struct {
 	HugepageLimits []LinuxHugepageLimit `json:"hugepageLimits,omitempty"`
 	// Network restriction configuration
 	Network *LinuxNetwork `json:"network,omitempty"`
+	// Rdma resource restriction configuration
+	RdmaLimits []LinuxRdma `json:"rdmaLimits,omitempty"`
 }
 
 // LinuxDevice represents the mknod information for a Linux special device file
