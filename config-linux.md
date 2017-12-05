@@ -169,7 +169,7 @@ In addition to any devices configured with this setting, the runtime MUST also s
 ## <a name="configLinuxControlGroups" />Control groups
 
 Also known as cgroups, they are used to restrict resource usage for a container and handle device access.
-cgroups provide controls (through controllers) to restrict cpu, memory, IO, pids and network for the container.
+cgroups provide controls (through controllers) to restrict cpu, memory, IO, pids, network and rdma resources for the container.
 For more information, see the [kernel cgroups documentation][cgroup-v1].
 
 ### <a name="configLinuxCgroupsPath" />Cgroups Path
@@ -455,6 +455,34 @@ The following parameters can be specified to set up the controller:
    }
 ```
 
+### <a name="configLinuxRDMA" />RDMA
+
+**`rdma`** (object, OPTIONAL) represents the cgroup subsystem `rdma`.
+For more information, see the kernel cgroups documentation about [rdma][cgroup-v1-rdma].
+
+The following parameters can be specified to set up the controller:
+
+* **`hca_device`** *(string, REQUIRED)* - specifies the device name whose resources limit to be configured
+* **`hca_handles`** *(uint32, REQUIRED)* - specifies the maximum number of hca_objects in the cgroup for a specified device
+* **`hca_objects`** *(uint32, REQUIRED)* - specifies the maximum number of hca_handles in the cgroup for a specified device
+
+#### Example
+
+```json
+    "rdma": [
+        {
+            "hca_device": "mlx5_1",
+            "hca_handles": 1,
+            "hca_objects": 10000,
+        },
+        {
+            "hca_device": "rxe4",
+            "hca_handles": 100,
+            "hca_objects": 50000,
+        }
+    ]
+```
+
 ## <a name="configLinuxIntelRdt" />IntelRdt
 
 **`intelRdt`** (object, OPTIONAL) represents the [Intel Resource Director Technology][intel-rdt-cat-kernel-interface].
@@ -647,6 +675,7 @@ The following parameters can be specified to set up seccomp:
 [cgroup-v1-net-cls]: https://www.kernel.org/doc/Documentation/cgroup-v1/net_cls.txt
 [cgroup-v1-net-prio]: https://www.kernel.org/doc/Documentation/cgroup-v1/net_prio.txt
 [cgroup-v1-pids]: https://www.kernel.org/doc/Documentation/cgroup-v1/pids.txt
+[cgroup-v1-rdma]: https://www.kernel.org/doc/Documentation/cgroup-v1/rdma.txt
 [cgroup-v2]: https://www.kernel.org/doc/Documentation/cgroup-v2.txt
 [devices]: https://www.kernel.org/doc/Documentation/admin-guide/devices.txt
 [devpts]: https://www.kernel.org/doc/Documentation/filesystems/devpts.txt
