@@ -323,11 +323,11 @@ type LinuxNetwork struct {
 // LinuxRdma for Linux cgroup 'rdma' resource management (Linux 4.11)
 type LinuxRdma struct {
 	// Hca device name whose resources to be restricted
-	HcaDevice string `json:"hca_device"`
+	HcaDevice string `json:"hca_device,omitempty"`
 	// Maximum number of HCA handles that can be opened. Default is "no limit".
-	HcaHandles uint32 `json:"hca_handles"`
+	HcaHandles *uint32 `json:"hca_handles,omitempty"`
 	// Maximum number of HCA objects that can be created. Default is "no limit".
-	HcaObjects uint32 `json:"hca_objects"`
+	HcaObjects *uint32 `json:"hca_objects,omitempty"`
 }
 
 // LinuxResources has container runtime resource constraints
