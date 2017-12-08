@@ -169,7 +169,7 @@ In addition to any devices configured with this setting, the runtime MUST also s
 ## <a name="configLinuxControlGroups" />Control groups
 
 Also known as cgroups, they are used to restrict resource usage for a container and handle device access.
-cgroups provide controls (through controllers) to restrict cpu, memory, IO, pids, network and rdma resources for the container.
+cgroups provide controls (through controllers) to restrict cpu, memory, IO, pids, network and RDMA resources for the container.
 For more information, see the [kernel cgroups documentation][cgroup-v1].
 
 ### <a name="configLinuxCgroupsPath" />Cgroups Path
@@ -462,9 +462,10 @@ For more information, see the kernel cgroups documentation about [rdma][cgroup-v
 
 The following parameters can be specified to set up the controller:
 
-* **`hca_device`** *(string, REQUIRED)* - specifies the device name whose resources limit to be configured
-* **`hca_handles`** *(uint32, REQUIRED)* - specifies the maximum number of hca_objects in the cgroup for a specified device
-* **`hca_objects`** *(uint32, REQUIRED)* - specifies the maximum number of hca_handles in the cgroup for a specified device
+* **`hca_device`** *(string, OPTIONAL)* - specifies the device name whose resources limit to be configured
+* **`hca_handles`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_objects in the cgroup for a specified device
+* **`hca_objects`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_handles in the cgroup for a specified device
+You must specify valid `hca_device` when either of the `hca_handles` or `hca_objects` is provided.
 
 #### Example
 
