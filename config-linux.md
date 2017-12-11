@@ -462,26 +462,30 @@ For more information, see the kernel cgroups documentation about [rdma][cgroup-v
 
 The following parameters can be specified to set up the controller:
 
-* **`hca_device`** *(string, OPTIONAL)* - specifies the device name whose resources limit to be configured
-* **`hca_handles`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_objects in the cgroup for a specified device
-* **`hca_objects`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_handles in the cgroup for a specified device
-You must specify valid `hca_device` when either of the `hca_handles` or `hca_objects` is provided.
+* **`limits`** *(list of objects, OPTIONAL)* - specifies a list of objects of the limits applicable to processes in the group.
+    * **`hca_device`** *(string, REQUIRED)* - specifies the device name whose resources limit to be configured
+        The following parameters can be specified per-device:
+        * **`hca_handles`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_objects in the cgroup
+        * **`hca_objects`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_handles in the cgroup
+        You MUST specify at least one of the `hca_handles` or `hca_objects` in a given entry, and MAY specify both.
 
 #### Example
 
 ```json
-    "rdma": [
-        {
-            "hca_device": "mlx5_1",
-            "hca_handles": 1,
-            "hca_objects": 10000,
-        },
-        {
-            "hca_device": "rxe4",
-            "hca_handles": 100,
-            "hca_objects": 50000,
-        }
-    ]
+    "rdma": {
+        "limits": [
+            "mlx5_1": {
+                "hca_handles": 3,
+                "hca_objects": 10000
+            },
+            "rxe3": {
+                "hca_handles": 3,
+            },
+            "mlx4_0": {
+                "hca_objects": 1000
+            }
+        ]
+    }
 ```
 
 ## <a name="configLinuxIntelRdt" />IntelRdt
