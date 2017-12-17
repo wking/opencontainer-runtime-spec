@@ -320,13 +320,7 @@ type LinuxNetwork struct {
 	Priorities []LinuxInterfacePriority `json:"priorities,omitempty"`
 }
 
-// LinuxRdma for Linux cgroup 'rdma' resource management (Linux 4.11)
-type LinuxRdma struct {
-	// Limits are a set of key value pairs that define RDMA resource limits,
-	// where the key is device name and value is resource limits.
-	Limits map[string]LinuxRdmaLimit `json:"limits,omitempty"`
-}
-
+// LinuxRdmaLimit for Linux cgroup 'rdma' resource management (Linux 4.11)
 type LinuxRdmaLimit struct {
 	// Maximum number of HCA handles that can be opened. Default is "no limit".
 	HcaHandles *uint32 `json:"hca_handles,omitempty"`
@@ -351,7 +345,9 @@ type LinuxResources struct {
 	// Network restriction configuration
 	Network *LinuxNetwork `json:"network,omitempty"`
 	// Rdma resource restriction configuration
-	RdmaLimits LinuxRdma `json:"rdmaLimits,omitempty"`
+	// Limits are a set of key value pairs that define RDMA resource limits,
+	// where the key is device name and value is resource limits.
+	RdmaLimits map[string]LinuxRdmaLimit `json:"rdmaLimits,omitempty"`
 }
 
 // LinuxDevice represents the mknod information for a Linux special device file
