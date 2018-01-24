@@ -212,6 +212,12 @@
                                 }
                             }
                         }
+                    },
+                    "rdmaLimits": {
+                        "type": "object",
+                        "additionalProperties": {
+                            "$ref": "defs-linux.json#/definitions/RdmaLimit"
+                        }
                     }
                 }
             },

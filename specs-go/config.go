@@ -344,7 +344,7 @@ type LinuxResources struct {
 	HugepageLimits []LinuxHugepageLimit `json:"hugepageLimits,omitempty"`
 	// Network restriction configuration
 	Network *LinuxNetwork `json:"network,omitempty"`
-	// Rdma resource restriction configuration
+	// RdmaLimits resource restriction configuration.
 	// Limits are a set of key value pairs that define RDMA resource limits,
 	// where the key is device name and value is resource limits.
 	RdmaLimits map[string]LinuxRdmaLimit `json:"rdmaLimits,omitempty"`

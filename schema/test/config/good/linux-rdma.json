@@ -1,0 +1,22 @@
+{
+    "ociVersion": "1.0.0",
+    "root": {
+        "path": "rootfs"
+    },
+    "linux": {
+        "resources": {
+            "rdmaLimits": {
+                "mlx5_1": {
+                    "hca_handles": 3,
+                    "hca_objects": 10000
+                },
+                "mlx4_0": {
+                    "hca_objects": 1000
+                },
+                "rxe3": {
+                    "hca_objects": 10000
+                }
+            }
+        }
+    }
+}

@@ -457,40 +457,32 @@ The following parameters can be specified to set up the controller:
 
 ### <a name="configLinuxRDMA" />RDMA
 
-**`rdma`** (object, OPTIONAL) represents the cgroup subsystem `rdma`.
+**`rdmaLimits`** (object, OPTIONAL) represents the cgroup subsystem `rdma`.
 For more information, see the kernel cgroups documentation about [rdma][cgroup-v1-rdma].
 
-The following parameters can be specified to set up the controller:
+The name of the device to limit is the entry key.
+Entry values are objects with the following properties:
 
-* **`rdmaLimits`** *(list of objects, OPTIONAL)* - specifies a list of limit objects applicable to processes in the group.
-Limit object is a key value pair that defines limits of a device.
-    * **`hca_device`** *(string, REQUIRED)* - specifies the device name whose resources limit to be configured
-        The following parameters can be specified per-device:
-        * **`hca_handles`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_objects in the cgroup
-        * **`hca_objects`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_handles in the cgroup
-        You MUST specify at least one of the `hca_handles` or `hca_objects` in a given entry, and MAY specify both.
+* **`hca_handles`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_objects in the cgroup
+* **`hca_objects`** *(uint32, OPTIONAL)* - specifies the maximum number of hca_handles in the cgroup
+
+You MUST specify at least one of the `hca_handles` or `hca_objects` in a given entry, and MAY specify both.
 
 #### Example
 
 ```json
-    "rdma": [
-                {
-		    "mlx5_1": {
-                        "hca_handles": 3,
-                        "hca_objects": 10000
-		    }
-	        },
-                {
-                    "mlx4_0": {
-                        "hca_objects": 1000
-                    }
-                },
-                {
-                    "rxe3": {
-                        "hca_objects": 10000
-                    }
-                }
-             ]
+"rdmaLimits": {
+    "mlx5_1": {
+        "hca_handles": 3,
+        "hca_objects": 10000
+    },
+    "mlx4_0": {
+        "hca_objects": 1000
+    },
+    "rxe3": {
+        "hca_objects": 10000
+    }
+}
 ```
 
 ## <a name="configLinuxIntelRdt" />IntelRdt
